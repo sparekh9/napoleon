@@ -8,37 +8,39 @@
 
 using namespace std;
 
+#define ACE_OF_SPADES 39
+
 namespace napoleon {
 
   typedef int card_t;
-
-  // enum suit {clubs, hearts, diamonds, spades};
   
   class Deck {
-    friend class Hand;
 
     public:
 
       Deck(bool shuffle);
 
       // Implementation of Fisher-Yates Shuffle
-      void Shuffle();
+      void Shuffle(int n);
+
+      bool IsEmpty();
 
       //Draw the card from the top
       card_t Draw();
-
-      //Return the readable string for the card
-      string GetString(card_t card);
 
       //Print all remaining cards in the deck
       void PrintDeck();
 
     private:
-
-      int GetRank(card_t card);
-      int GetSuit(card_t card);
-      
+    
       vector<int> deck_{vector<card_t>(52, 0)};
-      array<string, 4> suits = {"♣", "♡", "♢", "♠"};
   };
+
+  int GetCard(int rank, int suit);
+
+  int GetRank(card_t card);
+
+  int GetSuit(card_t card);
+
+  string GetCardString(card_t card);
 }
