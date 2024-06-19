@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <numeric>
+#include <enet/enet.h>
 #include "../include/hand.h"
 
 namespace napoleon {
@@ -12,9 +13,7 @@ namespace napoleon {
   class Player{
     public:
 
-    Player(string user) {
-      user_ = user;
-    }
+    Player(int clientSocket, string user) : clientSocket_(clientSocket), user_(user) { }
 
     Player(string user, Hand hand) {
       user_ = user;
@@ -33,6 +32,10 @@ namespace napoleon {
       return user_;
     }
 
+    int GetSocket() {
+      return clientSocket_;
+    }
+
     move_t RequestMove(vector<Player> players);
 
     void PrintHand() {
@@ -40,7 +43,7 @@ namespace napoleon {
     }
 
     private:
-
+      int clientSocket_ = -1;
       string user_;
       Hand hand_;
   };
