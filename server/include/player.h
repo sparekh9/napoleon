@@ -1,9 +1,12 @@
 #include <iostream>
 #include <array>
+#include <cstring>
 #include <string>
 #include <vector>
 #include <numeric>
-#include <enet/enet.h>
+#include <netinet/in.h> 
+#include <sys/socket.h> 
+#include <unistd.h> 
 #include "../include/hand.h"
 
 namespace napoleon {
@@ -13,7 +16,14 @@ namespace napoleon {
   class Player{
     public:
 
-    Player(int clientSocket, string user) : clientSocket_(clientSocket), user_(user) { }
+    bool operator!= (Player oth) {
+      return this->user_.compare(oth.GetUser()) != 0;
+    }
+
+    Player(int clientSocket, string user) {
+      clientSocket_ = clientSocket;
+      user_ = user;
+    }
 
     Player(string user, Hand hand) {
       user_ = user;
@@ -36,10 +46,14 @@ namespace napoleon {
       return clientSocket_;
     }
 
+    bool SendMessage(const char *msg) {
+      return send(clientSocket_, msg, strlen(msg), 0) > 0;
+    }
+
     move_t RequestMove(vector<Player> players);
 
-    void PrintHand() {
-      hand_.PrintHand();
+    std::string PrintHand() {
+      return hand_.PrintHand();
     }
 
     private:

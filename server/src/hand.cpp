@@ -46,10 +46,12 @@ namespace napoleon {
     return ranks_.count(rank) != 0;
   }
 
-  void Hand::PrintHand() {
+  std::string Hand::PrintHand() {
+    std::stringstream out;
     for (auto const &card : hand_) {
-      cout << GetCardString(card) << "\t";
+      out << GetCardString(card) << "\t";
     }
-    cout << "\n";
+    out << "\n";
+    return out.str();
   }
 }

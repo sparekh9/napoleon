@@ -22,7 +22,7 @@ namespace napoleon {
       //Checks if player has the rank they are asking for
       bool IsValidMove(int rank);
 
-      void PrintHand();
+      std::string PrintHand();
 
     private:
       std::unordered_map<int, size_t> ranks_;
